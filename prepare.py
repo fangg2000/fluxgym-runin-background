@@ -7,17 +7,20 @@ import shutil
 def initImgData(name):
     img_file_name_list = []
     content_dict = {}
+    
+    os.makedirs(f"outputs/{name}", exist_ok=True)
 
-    with open(f"datasets/{name}/content.txt", "r", encoding="utf-8") as f:
-        lines = f.readlines()
-
-        for txt in lines:
-            if len(txt.strip()) > 0 and "#" in txt:
-                tmpArr = txt.strip().split('#')
-                content_dict[tmpArr[0]] = tmpArr[1]
-
-        shutil.copy2(f"datasets/{name}/content.txt", f"outputs/{name}/content_bak.txt")
-        os.remove(f"datasets/{name}/content.txt")
+    if os.path.exists(f"datasets/{name}/content.txt"):
+        with open(f"datasets/{name}/content.txt", "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    
+            for txt in lines:
+                if len(txt.strip()) > 0 and "#" in txt:
+                    tmpArr = txt.strip().split('#')
+                    content_dict[tmpArr[0]] = tmpArr[1]
+    
+            shutil.copy2(f"datasets/{name}/content.txt", f"outputs/{name}/content_bak.txt")
+            os.remove(f"datasets/{name}/content.txt")
 
     # print(content_dict)
 
@@ -38,13 +41,11 @@ def initImgData(name):
                     # print(f"{img_name}没有对应的文本内容")
                     with open(f"datasets/{name}/{img_name}.txt", 'w', encoding='utf-8') as file:
                         file.write(name)
-
     pass
 
 
 def initParamData(name:str, model: int, vram: int):
     #
-    os.makedirs(f"outputs/{name}", exist_ok=True)
     current_path = os.getcwd()
 
     # 初始化--dataset.toml
