@@ -1,7 +1,7 @@
-这是对fluxgym可在后台运行的文件，操作很简单。。。
+This is a file that can run in the background for fluxgym. The operation is very simple. . .
 
-1、把你要微调的lora图片放在文件侠A里面，A文件侠里面一定要加一个content.txt文件（专门指定图片名称对应的关联词语），格式如：xxx#smile，然后放到datasets里面； 
-2、执行prepare.py，命令如：python prepare.py --name A --model 0 --vram 20，其中name对应你图片所有的文件侠名称，model的值0、1、2对应原项目的选择模型，如0对应flux-dev，vram的值对应显存大小，默认12G，model和vram也可以不加； 
-3、执行train_test.py，命令如：python train_test.py --name A
+1. Put the lora image you want to fine-tune in file A. A file must add a content.txt file (specifically specify the associated words corresponding to the image name), the format is such as: xxx#smile, and then put it in datasets;
+2. Execute prepare.py, the command is such as: python prepare.py --name A --model 0 --vram 20, where name corresponds to the file name of all your images, the value of model 0, 1, 2 corresponds to the selected model of the original project, such as 0 corresponds to flux-dev, the value of vram corresponds to the video memory size, the default is 12G, model and vram can also be not added;
+3. Execute train_test.py, the command is such as: python train_test.py --name A
 
-感谢cocktailpeanut等大佬，fluxgym的确是一个很好的项目。
+Thanks to cocktailpeanut and other big guys, fluxgym is indeed a very good project.
