@@ -5,3 +5,5 @@ This is a file that can run in the background for fluxgym. The operation is very
 3. Execute train_test.py, the command is such as: python train_test.py --name A
 
 Thanks to cocktailpeanut and other big guys, fluxgym is indeed a very good project.
+
+https://github.com/cocktailpeanut/fluxgym
