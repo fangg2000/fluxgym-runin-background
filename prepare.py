@@ -13,12 +13,12 @@ def initImgData(name):
     if os.path.exists(f"datasets/{name}/content.txt"):
         with open(f"datasets/{name}/content.txt", "r", encoding="utf-8") as f:
             lines = f.readlines()
-    
+
             for txt in lines:
                 if len(txt.strip()) > 0 and "#" in txt:
                     tmpArr = txt.strip().split('#')
                     content_dict[tmpArr[0]] = tmpArr[1]
-    
+
             shutil.copy2(f"datasets/{name}/content.txt", f"outputs/{name}/content_bak.txt")
             os.remove(f"datasets/{name}/content.txt")
 
@@ -41,10 +41,11 @@ def initImgData(name):
                     # print(f"{img_name}没有对应的文本内容")
                     with open(f"datasets/{name}/{img_name}.txt", 'w', encoding='utf-8') as file:
                         file.write(name)
+
     pass
 
 
-def initParamData(name:str, model: int, vram: int):
+def initParamData(name:str, model: int, vram: int, batch_size: int):
     #
     current_path = os.getcwd()
 
@@ -53,6 +54,8 @@ def initParamData(name:str, model: int, vram: int):
         lines = f.readlines()
         dataset_content = ""
         for txt in lines:
+            if batch_size > 1 and "batch_size" in txt:
+                txt = f"batch_size = {batch_size}\n"
             dataset_content = dataset_content + txt.replace("mylora", name).replace("/home/fangg/other/tts/fluxgym", current_path)
 
         with open(f"outputs/{name}/dataset.toml", 'w', encoding='utf-8') as file:
@@ -107,7 +110,7 @@ def initParamData(name:str, model: int, vram: int):
     pass
 
 
-def init_data(name: str, model: int, vram: int):
+def init_data(name: str, model: int, vram: int, batch_size: int):
     print(f'准备开始处理数据...')
     # print(f'lora名称--{name}, 显存--{vram}G')
 
@@ -127,7 +130,7 @@ def init_data(name: str, model: int, vram: int):
         initImgData(name)
 
         # 初始化参数
-        initParamData(name, model, vram)
+        initParamData(name, model, vram, batch_size)
     else:
         print(f"名称对应的图片数据集不存在")
 
@@ -149,6 +152,7 @@ if __name__ == "__main__":
     parser.add_argument('--name', type=str, default="mylora")
     parser.add_argument('--model', type=int, default=2)
     parser.add_argument('--vram', type=int, default=12)
+    parser.add_argument('--batch_size', type=int, default=1)
     args = parser.parse_args()
 
-    init_data(args.name, args.model, args.vram)
+    init_data(args.name, args.model, args.vram, args.batch_size)
