@@ -95,7 +95,7 @@ def exec_command(command):
     with propress.stdout:
         for line in iter(propress.stdout.readline, b''):
             if len(line) > 0:
-                print(line.encode().strip())
+                print(line.encode('utf-8').strip().decode('utf-8'))
 
     exitcode = propress.wait()
     return exitcode
